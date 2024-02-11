@@ -1,0 +1,27 @@
+{
+  "name": "pixelpalacehub",
+  "version": "1.0.0",
+  "description": "Pixel Palace Hub Photo App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BunyaminYavuz/PixelPalaceHub.git"
+  },
+  "keywords": [
+    "photo",
+    "gallery",
+    "pixel"
+  ],
+  "author": "Bunyamin Yavuz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BunyaminYavuz/PixelPalaceHub/issues"
+  },
+  "homepage": "https://github.com/BunyaminYavuz/PixelPalaceHub#readme",
+  "devDependencies": {
+    "prettier": "3.2.5"
+  }
+}
