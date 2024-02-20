@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Connect db
-mongoose.connect('mongodb://localhost/pixel-palace-test-db');
+mongoose.connect('mongodb://localhost/pixel-palace-hub-db');
 
 // Create a schema
 const PhotoSchema = new Schema({

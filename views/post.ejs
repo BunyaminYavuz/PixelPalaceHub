@@ -29,25 +29,25 @@ https://templatemo.com/tm-552-video-catalog
 				<main>
 					<div class="row mb-5 pb-4">
 						<div class="col-12">
-							<img src="img/video-detail-1.jpg" alt="Image" class="img-fluid tm-catalog-item-img">
+							<img src="<%= photo.image %>" alt="Image" class="img-fluid tm-catalog-item-img">
 						</div>
 					</div>
 					<div class="row mb-5 pb-5">
 						<div class="col-xl-8 col-lg-7">
 							<!-- Video description -->
 							<div class="tm-video-description-box">
-								<h2 class="mb-5 tm-video-title">Mauris dapibus urna nec ipsum posuere</h2>
-								<p class="mb-4">Cras dictum pretium est, et imperdiet ex. Fusce vitae vestibulum ipsum. Maecenas ultricies ipsum a urna ullamcorper, id interdum est blandit. Vivamus sit amet justo sed erat iaculis consequat. Nulla suscipit posuere lectus ut venenatis. Proin sed orci eget tellus euismod vulputate eu eu arcu.</p>	
+								<h2 class="mb-5 tm-video-title"><%= photo.title %></h2>
+								<p class="mb-4"><%= photo.description %></p>	
 							</div>							
 						</div>
 						<div class="col-xl-4 col-lg-5">
 							<!-- Share box -->
 							<div class="tm-bg-gray tm-share-box">
 								<div class="text-center">
-									<button class="btn btn-primary p-0 mb-4 tm-btn-animate tm-btn-download tm-icon-download"><span>Update Details</span></button>	
+									<a href="/photos/update/<%= photo._id %>" class="btn btn-primary p-0 mb-4 tm-btn-animate tm-btn-download tm-icon-download"><span>Update Details</span></a>	
 								</div>	
 								<div class="text-center">
-									<button class="btn btn-danger p-0 tm-btn-animate tm-btn-download tm-icon-download"><span>Delete Post</span></button>	
+									<a onclick="return confirm(`Are you sure to delete <%= photo.title.toUpperCase() %>?`)" href="/photos/<%= photo._id %>?_method=DELETE" class="btn btn-danger p-0 tm-btn-animate tm-btn-download tm-icon-download"><span>Delete Post</span></a>	
 								</div>								
 							</div>
 						</div>
@@ -57,20 +57,5 @@ https://templatemo.com/tm-552-video-catalog
 				
                 <%- include('partials/_footer') -%>
 
-
-    <script>
-    	$(document).ready(function() {
-    		$('.tm-likes-box').click(function(e) {
-    			e.preventDefault();
-    			$(this).toggleClass('tm-liked');
-
-    			if($(this).hasClass('tm-liked')) {
-    				$('#tm-likes-count').html('486 likes');
-    			} else {
-    				$('#tm-likes-count').html('485 likes');
-    			}
-    		});
-    	});
-    </script>
 </body>
 </html>
