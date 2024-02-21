@@ -3,10 +3,13 @@ const mongoose = require('mongoose');
 const ejs = require('ejs');
 const fileUpload = require('express-fileupload');
 const methodOverride = require('method-override');
-const fs = require('fs');
-const Photo = require('./models/Photo');
+const photoControllers = require('./controllers/photoControllers');
+const pageControllers = require('./controllers/pageControllers');
 
 const app = express();
+
+// Connect db
+mongoose.connect('mongodb://localhost/pixel-palace-hub-db');
 
 // TEMPLATE ENGINE
 app.set('view engine', 'ejs');
@@ -19,82 +22,15 @@ app.use(fileUpload());
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
 
 // ROUTES
-app.get(['/', '/index.html'], async (req, res) => {
-  const photos = await Photo.find({}).sort('-dateCreated');
-  res.render('index', {
-    photos,
-  });
-});
+app.get('/', photoControllers.getAllPhotos);
+app.get('/photos/:id', photoControllers.getPhoto);
+app.post('/photos', photoControllers.createPhoto);
+app.put('/photos/:id', photoControllers.updatePhoto);
+app.delete('/photos/:id', photoControllers.deletePhoto);
 
-app.get('/photos/:id', async (req, res) => {
-  const photo = await Photo.findById(req.params.id);
-  res.render('post', {
-    photo,
-  });
-});
-
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-
-app.get('/add', (req, res) => {
-  res.render('add');
-});
-
-app.get('/photos/update/:id', async (req, res) => {
-  const photo = await Photo.findOne({ _id: req.params.id });
-  res.render('update', {
-    photo,
-  });
-});
-
-app.put('/photos/:id', async (req, res) => {
-  const photo = await Photo.findOne({ _id: req.params.id });
-  // let uploadedImage = req.files.image;
-  // let uploadPath = __dirname + '/public/uploads/' + uploadedImage.name;
-
-  photo.title = req.body.title;
-  photo.description = req.body.description;
-  // photo.image = '/uploads/' + uploadedImage.name;
-  photo.save();
-  res.redirect(`/photos/${req.params.id}`);
-});
-
-app.post('/photos', async (req, res) => {
-  const uploadDir = 'public/uploads';
-
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdir(uploadDir, (err) => {
-      if (err) {
-        console.error('Error creating directory:', err);
-        // Handle the error accordingly
-        return;
-      }
-      console.log('Upload directory created successfully');
-    });
-  }
-
-  let uploadedImage = req.files.image;
-  let uploadPath = __dirname + '/public/uploads/' + uploadedImage.name;
-
-  uploadedImage.mv(uploadPath, async () => {
-    await Photo.create({
-      ...req.body,
-      image: '/uploads/' + uploadedImage.name,
-    });
-
-    res.redirect('/');
-  });
-});
-
-app.delete('/photos/:id', async (req, res) => {
-  const photo = await Photo.findOne({ _id: req.params.id });
-
-  const deletedIamge = __dirname + '/public' + photo.image;
-  fs.unlinkSync(deletedIamge);
-  await Photo.findByIdAndDelete({ _id: req.params.id });
-  res.redirect('/');
-});
+app.get('/about', pageControllers.getAboutPage);
+app.get('/add', pageControllers.getAddPage);
+app.get('/photos/update/:id', pageControllers.getUpdatePage);
 
 const port = 3000;
 app.listen(port, () => {
