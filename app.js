@@ -9,7 +9,16 @@ const pageControllers = require('./controllers/pageControllers');
 const app = express();
 
 // Connect db
-mongoose.connect('mongodb://localhost/pixel-palace-hub-db');
+mongoose
+  .connect(
+    'mongodb+srv://1byavuz07:gRJ7rFKXCB3Ljalf@cluster0.zqmcnt5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+  )
+  .then(() => {
+    console.log('DB CONNECTED!');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // TEMPLATE ENGINE
 app.set('view engine', 'ejs');
@@ -32,7 +41,7 @@ app.get('/about', pageControllers.getAboutPage);
 app.get('/add', pageControllers.getAddPage);
 app.get('/photos/update/:id', pageControllers.getUpdatePage);
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`The server has been started at port ${port}`);
 });

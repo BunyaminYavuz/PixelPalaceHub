@@ -50,7 +50,7 @@
 
                     <!-- Catalog Paging Buttons -->
                     <div>
-                        <% if(current > 0) { %>
+                        <% if(pages > 0) { %>
                         <ul class="nav tm-paging-links">
                             <% for(let i = 1; i <= pages; i++) { %>
                                 
@@ -58,8 +58,12 @@
                                     <a href="/?page=<%= i %>" class="nav-link tm-paging-link"><%= i %></a>
                                 </li>
                                 
-                            <% } %>
-                        </ul>
+                                <% } %>
+                                
+                                
+                                <li class="nav-item"><a href="/?page=<%= parseInt(current) + 1 %>" class="nav-link tm-paging-link">></a></li>
+                                
+                            </ul>
                         <% } %>
                     </div>
                 </main>
